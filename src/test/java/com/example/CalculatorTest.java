@@ -74,4 +74,18 @@ public class CalculatorTest {
         });
         assertEquals("Division by zero is not allowed", exception.getMessage());
     }
+
+    @Test
+    @DisplayName("Test multiplication with zero")
+    public void testMultiplicationWithZero() {
+        assertEquals(0.0, calculator.multiply(0.0, 100.0), "Multiplication with zero failed");
+    }
+
+    @Test
+    @DisplayName("Test division with negative numbers")
+    public void testDivisionWithNegativeNumbers() {
+        assertEquals(-5.0, calculator.divide(10.0, -2.0), "Division with negative numbers failed");
+    }
+
+
 }
