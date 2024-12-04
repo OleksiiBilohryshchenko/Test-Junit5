@@ -12,20 +12,29 @@
     <artifactId>Test-Junit5</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>Test-Junit5</name>
-    <description>Test-Junit5</description>
+    <description>Test project with JUnit 5, JaCoCo, and Mockito</description>
     <properties>
         <java.version>21</java.version>
     </properties>
     <dependencies>
-        <!-- Spring Boot starter dependencies -->
+        <!-- Spring Boot Starter -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
         </dependency>
 
+        <!-- Spring Boot Starter Test -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- Mockito with JUnit 5 -->
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-junit-jupiter</artifactId>
+            <version>5.7.0</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -54,7 +63,6 @@
                     <excludes>
                         <!-- Exclude Spring Boot application class -->
                         <exclude>com/example/TestJunit5Application*</exclude>
-                        <!-- Add any other non-essential classes to exclude -->
                     </excludes>
                 </configuration>
             </plugin>
