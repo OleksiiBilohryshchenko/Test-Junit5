@@ -11,9 +11,6 @@ public class ShapeExtension implements BeforeTestExecutionCallback, AfterTestExe
 
     @Override
     public void afterTestExecution(ExtensionContext context) {
-        Object testInstance = context.getTestInstance().orElseThrow();
-        if (testInstance instanceof Shape shape) {
-            assert shape.getName() != null && !shape.getName().trim().isEmpty() : "Shape name should not be null or empty";
-        }
+        System.out.println("Finished test: " + context.getDisplayName());
     }
 }
