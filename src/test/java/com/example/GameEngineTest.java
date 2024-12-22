@@ -36,5 +36,14 @@ public class GameEngineTest {
                 "Player one wins!");
     }
 
+    @Test
+    void shouldHandleDrawWhenSameMoves(){
+        when(playerOne.makeMove()).thenReturn(Move.PAPER);
+        when(playerTwo.makeMove()).thenReturn(Move.PAPER);
+
+        gameEngine.playRound();
+        assertEquals(Result.DRAW,gameEngine.decideWinner(),
+                "GameEngine should return draw when both players making the same move.");
+    }
 
 }

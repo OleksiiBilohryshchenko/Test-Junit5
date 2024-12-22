@@ -19,7 +19,12 @@ public class GameEngine {
     public void playRound(){
         Move moveOne = playerOne.makeMove();
         Move moveTwo = playerTwo.makeMove();
-        lastResult = Result.PLAYER_ONE_WINS;
+
+        if (moveOne == moveTwo) {
+            lastResult = Result.DRAW;
+        } else {
+            lastResult = Result.PLAYER_ONE_WINS;
+        }
     }
 
 }
