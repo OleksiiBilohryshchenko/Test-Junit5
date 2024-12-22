@@ -12,4 +12,8 @@ public class GameEngine {
         return lastMove;
     }
 
+    public Result decideWinner(){
+        return Result.PLAYER_ONE_WINS;
+    }
+
 }
