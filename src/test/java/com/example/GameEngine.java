@@ -20,6 +20,10 @@ public class GameEngine {
         Move moveOne = playerOne.makeMove();
         Move moveTwo = playerTwo.makeMove();
 
+        if (moveOne == null){
+            throw new GameException("Player's move can not be null");
+        }
+
         if (moveOne == moveTwo) {
             lastResult = Result.DRAW;
         } else {

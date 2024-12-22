@@ -7,6 +7,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -44,6 +45,17 @@ public class GameEngineTest {
         gameEngine.playRound();
         assertEquals(Result.DRAW,gameEngine.decideWinner(),
                 "GameEngine should return draw when both players making the same move.");
+    }
+
+    @Test
+    void shouldHandleExceptionWhenPlayerMoveIsNull(){
+        when(playerOne.makeMove()).thenReturn(null);
+
+        Exception exception = assertThrows(GameException.class, () -> gameEngine.playRound(),
+                "GameEngine should throw GameException when player's move is null");
+
+        assertEquals("Player's move can not be null", exception.getMessage(),
+                "GameEngine should provide a meaningful error message.");
     }
 
 }
