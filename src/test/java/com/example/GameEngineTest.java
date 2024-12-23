@@ -23,39 +23,65 @@ public class GameEngineTest {
 
     @BeforeEach
     void setUp() {
-        gameEngine = new GameEngine(playerOne,playerTwo);
+        gameEngine = new GameEngine(playerOne, playerTwo);
     }
 
     @Test
-    void shouldSimulatePlayerMoves(){
+    void shouldSimulatePlayerMoves() {
         when(playerOne.makeMove()).thenReturn(Move.ROCK);
         when(playerTwo.makeMove()).thenReturn(Move.SCISSORS);
 
-        gameEngine.playRound();
+        Result result = gameEngine.playRound();
 
-        assertEquals(Result.PLAYER_ONE_WINS,gameEngine.decideWinner(),
-                "Player one wins!");
+        assertEquals(Result.PLAYER_ONE_WINS, result,
+                "Player one should win when ROCK beats SCISSORS!");
     }
 
     @Test
-    void shouldHandleDrawWhenSameMoves(){
+    void shouldHandleDrawWhenSameMoves() {
         when(playerOne.makeMove()).thenReturn(Move.PAPER);
         when(playerTwo.makeMove()).thenReturn(Move.PAPER);
 
-        gameEngine.playRound();
-        assertEquals(Result.DRAW,gameEngine.decideWinner(),
-                "GameEngine should return draw when both players making the same move.");
+        Result result = gameEngine.playRound();
+
+        assertEquals(Result.DRAW, result,
+                "GameEngine should return DRAW when both players make the same move.");
     }
 
     @Test
-    void shouldHandleExceptionWhenPlayerMoveIsNull(){
+    void shouldHandleExceptionWhenPlayerMoveIsNull() {
         when(playerOne.makeMove()).thenReturn(null);
 
         Exception exception = assertThrows(GameException.class, () -> gameEngine.playRound(),
                 "GameEngine should throw GameException when player's move is null");
 
-        assertEquals("Player's move can not be null", exception.getMessage(),
+        assertEquals("Player's move cannot be null.", exception.getMessage(),
                 "GameEngine should provide a meaningful error message.");
     }
 
+    @Test
+    void shouldTrackScoresCorrectly() {
+        when(playerOne.makeMove()).thenReturn(Move.ROCK);
+        when(playerTwo.makeMove()).thenReturn(Move.SCISSORS);
+
+        gameEngine.playRound();
+
+        assertEquals(1, gameEngine.getPlayerOneScore(), "Player One's score should increase to 1.");
+        assertEquals(0, gameEngine.getPlayerTwoScore(), "Player Two's score should remain 0.");
+    }
+
+    @Test
+    void shouldDeclareWinnerAfterThreeRounds() {
+        when(playerOne.makeMove()).thenReturn(Move.ROCK, Move.PAPER, Move.SCISSORS);
+        when(playerTwo.makeMove()).thenReturn(Move.SCISSORS, Move.ROCK, Move.PAPER);
+
+        gameEngine.playRound();
+        gameEngine.playRound();
+        gameEngine.playRound();
+
+        String overallWinner = gameEngine.determineOverallWinner();
+
+        assertEquals("Player One Wins the Game!", overallWinner,
+                "GameEngine should declare Player One as the overall winner.");
+    }
 }
